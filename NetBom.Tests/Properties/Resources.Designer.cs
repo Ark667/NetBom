@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sbom.Tests.Properties {
+namespace NetBom.Tests.Properties {
     using System;
     
     

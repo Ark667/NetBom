@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 public class DebugLogger<T> : ILogger<T>
 {
-    public IDisposable BeginScope<TState>(TState state)
+    IDisposable ILogger.BeginScope<TState>(TState state)
     {
         return NullScope.Instance;
     }
@@ -20,7 +20,7 @@ public class DebugLogger<T> : ILogger<T>
         LogLevel logLevel,
         EventId eventId,
         TState state,
-        Exception exception,
+        Exception? exception,
         Func<TState, Exception, string> formatter
     )
     {

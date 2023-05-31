@@ -3,12 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetBom.Cli.Options;
-using Sbom.Core.Services;
+using NetBom.Core.Services;
 using System;
 
 namespace NetBom.Cli;
 
-internal class Program
+internal static class Program
 {
     internal static IServiceProvider ServiceProvider { get; set; }
 
@@ -31,6 +31,7 @@ internal class Program
             var serviceCollection = new ServiceCollection()
                 .AddTransient<INuGetService, NuGetService>()
                 .AddTransient<ReportService>()
+                .AddTransient<CsprojService>()
                 .AddScoped<IConfiguration>(_ => configuration);
 
             // Logging

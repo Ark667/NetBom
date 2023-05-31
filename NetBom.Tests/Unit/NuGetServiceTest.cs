@@ -3,8 +3,8 @@
 namespace NetBom.Tests.Unit;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sbom.Core.Services;
-using Sbom.Tests.Helpers;
+using NetBom.Core.Services;
+using NetBom.Tests.Helpers;
 
 /// <summary>
 /// Defines the <see cref="NuGetServiceTest" />.

@@ -6,11 +6,14 @@
     },
     "Sbom.Cli - Report": {
       "commandName": "Project",
-      "commandLineArgs": "report --source \"..\\..\\..\\Sbom.Cli.csproj\""
+      "commandLineArgs": "report --source \"..\\..\\..\\NetBom.Cli.csproj\""
     },
     "MyDande.Manager": {
       "commandName": "Project",
       "commandLineArgs": "report --source \"D:\\Repositorios\\Visual_Studio_Community\\MyDance\\Services\\MyDance.Manager\\MyDance.Manager\\MyDance.Manager.csproj\""
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }

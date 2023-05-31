@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using NetBom.Core.Helpers;
 using NetBom.Core.Models.Csproj;
 using NetBom.Core.Models.Json;
 using NetBom.Core.Models.Nuspec;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 namespace NetBom.Core.Services;
 
@@ -35,7 +35,11 @@ public class ReportService
     /// Initializes a new instance of the <see cref="ReportService"/> class.
     /// </summary>
     /// <param name="nuGetService">The libraryAnalyzer<see cref="INuGetService"/>.</param>
-    public ReportService(INuGetService nuGetService, CsprojService csprojService, ILogger<ReportService> logger)
+    public ReportService(
+        INuGetService nuGetService,
+        CsprojService csprojService,
+        ILogger<ReportService> logger
+    )
     {
         NuGetService = nuGetService;
         CsprojService = csprojService;
@@ -46,14 +50,12 @@ public class ReportService
     /// <remarks>
     /// This method creates a report from a csproj file passed as a parameter.
     /// The report contains three folders, where are the files used to create the json,
-    /// where all the information of the dependencies used in the csproj.
+    /// containing the information of the dependencies used in the csproj.
     /// </remarks>
     public void Create(string source)
     {
         // Load paths
-        string reportsPath = Path.GetFullPath(
-            Path.Combine("Reports", DateTime.Now.ToString("yyyyMMdd HHmmss"))
-        );
+        string reportsPath = Path.GetFullPath(".netbom");
         CreateDirectory(reportsPath);
         string csprojDirectory = Path.Combine(reportsPath, ".csproj");
         CreateDirectory(csprojDirectory);
@@ -73,8 +75,8 @@ public class ReportService
                 Date = DateTime.Now.ToString(),
                 Project = sourceFileInfo.Name
             },
-            Tree = new List<Package>(),
-            List = new List<Package>(),
+            Tree = new List<Models.Json.Package>(),
+            List = new List<Models.Json.Package>(),
         };
 
         // Load csproj XML
@@ -106,14 +108,13 @@ public class ReportService
                     report,
                     sourceFileInfo,
                     csprojDirectory,
-                    nuspecDirectory);
+                    nuspecDirectory
+                );
         }
 
         // Generate dependecy list
         foreach (var item in report.Tree)
-            AddPackageToListoFromTree(
-                report.List,
-                item);
+            AddPackageToListoFromTree(report.List, item);
 
         // Write report to output
         string sourceJson = Path.Combine(
@@ -154,13 +155,10 @@ public class ReportService
         Report report,
         FileInfo sourceFileInfo,
         string csprojDirectory,
-        string nuspecDirectory)
+        string nuspecDirectory
+    )
     {
-        string nuspecPath = AddNuspec(
-            reference.Include,
-            reference.Version,
-            nuspecDirectory
-        );
+        string nuspecPath = AddNuspec(reference.Include, reference.Version, nuspecDirectory);
 
         Logger.LogInformation("Nuspec {path}.", nuspecPath);
 
@@ -174,7 +172,7 @@ public class ReportService
         try
         {
             report.Tree.Add(
-                new Package()
+                new Models.Json.Package()
                 {
                     Name = reference.Include,
                     Version = reference.Version,
@@ -205,7 +203,11 @@ public class ReportService
     {
         try
         {
-            var report2 = new Report() { Tree = new List<Package>(), List = new List<Package>() };
+            var report2 = new Report()
+            {
+                Tree = new List<Models.Json.Package>(),
+                List = new List<Models.Json.Package>()
+            };
             var fileInfo2 = new FileInfo(
                 Path.Combine(sourceFileInfo.FullName, "..", reference.Include)
             );
@@ -220,9 +222,12 @@ public class ReportService
                         report2,
                         fileInfo2,
                         csprojDirectory,
-                        nuspecDirectory);
+                        nuspecDirectory
+                    );
 
-            report.Tree.Add(new Package() { Name = fileInfo2.Name, Dependencies = report2.Tree });
+            report.Tree.Add(
+                new Models.Json.Package() { Name = fileInfo2.Name, Dependencies = report2.Tree }
+            );
         }
         catch (Exception ex)
         {
@@ -230,7 +235,10 @@ public class ReportService
         }
     }
 
-    private void AddPackageToListoFromTree(List<Package> list, Package package)
+    private void AddPackageToListoFromTree(
+        List<Models.Json.Package> list,
+        Models.Json.Package package
+    )
     {
         // Add current package to list
         AddPackageToList(list, package);
@@ -241,27 +249,35 @@ public class ReportService
                 AddPackageToListoFromTree(list, item);
     }
 
-    private void AddPackageToList(List<Package> list, Package package)
+    private void AddPackageToList(List<Models.Json.Package> list, Models.Json.Package package)
     {
         if (!list.Any(o => o.Name == package.Name && o.Version == package.Version))
         {
-            var nuspecInfo = NuGetService.GetPackageInfo(package.Name, package.Version);
+            if (!string.IsNullOrEmpty(package.Version))
+            {
+                Logger.LogInformation(
+                    "Adding package {package} {version} to list.",
+                    package.Name,
+                    package.Version
+                );
+                var nuspecInfo = NuGetService.GetPackageInfo(package.Name, package.Version);
 
-            list.Add(
-                new Package()
-                {
-                    Name = package.Name,
-                    Version = package.Version,
-                    License = nuspecInfo.Metadata.LicenseUrl,
-                    Authors = nuspecInfo.Metadata.Authors,
-                    ProjectUrl = nuspecInfo.Metadata.ProjectUrl,
-                    Copyright = nuspecInfo.Metadata.Copyright
-                }
-            );
+                list.Add(
+                    new Models.Json.Package()
+                    {
+                        Name = package.Name,
+                        Version = package.Version,
+                        License = nuspecInfo.Metadata.LicenseUrl,
+                        Authors = nuspecInfo.Metadata.Authors,
+                        ProjectUrl = nuspecInfo.Metadata.ProjectUrl,
+                        Copyright = nuspecInfo.Metadata.Copyright
+                    }
+                );
+            }
         }
     }
 
-    public List<Package> CreateDependencies(
+    public List<Models.Json.Package> CreateDependencies(
         string nuspecPath,
         string csprojName,
         string csprojDirectory,
@@ -269,7 +285,7 @@ public class ReportService
     )
     {
         var csprojPath = Path.Combine(csprojDirectory, csprojName);
-        var dependencies = new List<Package>();
+        var dependencies = new List<Models.Json.Package>();
         var nuGetPackage = XmlHelper.DeserializeXml<Models.Nuspec.Package>(nuspecPath);
         var project = XmlHelper.DeserializeXml<Project>(csprojPath);
 
@@ -292,7 +308,7 @@ public class ReportService
                     );
 
                     dependencies.Add(
-                        new Package()
+                        new Models.Json.Package()
                         {
                             Name = dependency.Id,
                             Version = dependency.Version,

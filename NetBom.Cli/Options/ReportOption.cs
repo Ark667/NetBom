@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Sbom.Core.Services;
+using NetBom.Core.Services;
 using System;
 using System.IO;
 

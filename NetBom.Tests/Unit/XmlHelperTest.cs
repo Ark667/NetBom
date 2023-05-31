@@ -3,9 +3,9 @@
 namespace NetBom.Tests.Unit;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sbom.Core.Helpers;
-using Sbom.Core.Models.Csproj;
-using Sbom.Tests.Properties;
+using NetBom.Core.Helpers;
+using NetBom.Core.Models.Csproj;
+using NetBom.Tests.Properties;
 
 /// <summary>
 /// Defines the <see cref="XmlHelperTest" />.
