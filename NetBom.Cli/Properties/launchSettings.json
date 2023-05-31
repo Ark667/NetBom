@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Sbom.Cli - Report": {
+      "commandName": "Project",
+      "commandLineArgs": "report --source \"..\\..\\..\\Sbom.Cli.csproj\""
+    },
+    "MyDande.Manager": {
+      "commandName": "Project",
+      "commandLineArgs": "report --source \"D:\\Repositorios\\Visual_Studio_Community\\MyDance\\Services\\MyDance.Manager\\MyDance.Manager\\MyDance.Manager.csproj\""
+    }
+  }
+}

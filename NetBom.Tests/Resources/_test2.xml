@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Label="Globals">
+		<SccProjectName>SAK</SccProjectName>
+		<SccProvider>SAK</SccProvider>
+		<SccAuxPath>SAK</SccAuxPath>
+		<SccLocalPath>SAK</SccLocalPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<CodeAnalysisRuleSet>..\..\.sonarlint\mydance_mydancecsharp.ruleset</CodeAnalysisRuleSet>
+		<SonarQubeTestProject>False</SonarQubeTestProject>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="..\..\.sonarlint\mydance_mydance\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="itext7" Version="7.2.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />
+		<PackageReference Include="MyDance.Core.Integrations" Version="1.0.23129.2">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Location" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Mailing" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Media" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Payment" Version="1.0.23127.2">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.PushNotification" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Sms" Version="1.0.23127.2">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Storage" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+		<PackageReference Include="MyDance.Core.Web" Version="1.0.23129.1">
+			<NoWarn></NoWarn>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\MyDance.Models\MyDance.Models\MyDance.Models.csproj" />
+	</ItemGroup>
+
+</Project>
