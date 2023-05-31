@@ -55,12 +55,12 @@ public class ReportService
     public void Create(string source, string output)
     {
         // Load paths
-        CreateDirectory(output);
+        CreateDirectory(output, clean: true);
         string csprojDirectory = Path.Combine(output, ".csproj");
         CreateDirectory(csprojDirectory);
         string nuspecDirectory = Path.Combine(output, ".nuspec");
         CreateDirectory(nuspecDirectory);
-        string licenseDirectory = Path.Combine(output, ".licence");
+        string licenseDirectory = Path.Combine(output, ".license");
         CreateDirectory(licenseDirectory);
 
         Logger.LogInformation("Output path on {path}.", output);
@@ -134,8 +134,14 @@ public class ReportService
     /// <remarks>
     /// Checks if a path exists, if not, it creates it.
     /// </remarks>
-    private void CreateDirectory(string path)
+    private void CreateDirectory(string path, bool clean = false)
     {
+        if (clean && Directory.Exists(path))
+        {
+            Directory.Delete(path, true);
+            Logger.LogInformation("Deleted {path}.", path);
+        }
+
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

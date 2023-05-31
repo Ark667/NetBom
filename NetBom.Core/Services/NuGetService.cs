@@ -12,6 +12,11 @@ namespace NetBom.Core.Services;
 public class NuGetService : INuGetService
 {
     /// <summary>
+    /// Defines the _nugetPackagesPath.
+    /// </summary>
+    private string _nugetPackagesPath;
+
+    /// <summary>
     /// Gets the Logger.
     /// </summary>
     public ILogger<NuGetService> Logger { get; }
@@ -29,20 +34,24 @@ public class NuGetService : INuGetService
     /// </summary>
     public string GetPackagesPath()
     {
-        string nugetPackagesPath = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
-        if (!string.IsNullOrEmpty(nugetPackagesPath))
+        if (string.IsNullOrEmpty(_nugetPackagesPath))
         {
-            Logger.LogDebug("NUGET_PACKAGES environment variable: {path}", nugetPackagesPath);
-            return nugetPackagesPath;
+            _nugetPackagesPath = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
+            if (!string.IsNullOrEmpty(_nugetPackagesPath))
+            {
+                Logger.LogDebug("NUGET_PACKAGES environment variable: {path}", _nugetPackagesPath);
+                return _nugetPackagesPath;
+            }
+
+            _nugetPackagesPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                ".nuget",
+                "packages"
+            );
+            Logger.LogDebug("Default NuGet path: {path}", _nugetPackagesPath);
         }
 
-        nugetPackagesPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages"
-        );
-        Logger.LogDebug("Default NuGet path: {path}", nugetPackagesPath);
-        return nugetPackagesPath;
+        return _nugetPackagesPath;
     }
 
     /// <summary>
