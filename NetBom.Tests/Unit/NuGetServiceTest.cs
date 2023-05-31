@@ -10,6 +10,7 @@ using NetBom.Tests.Helpers;
 /// Defines the <see cref="NuGetServiceTest" />.
 /// </summary>
 [TestClass]
+[TestCategory("CI")]
 [TestCategory("Unit")]
 public class NuGetServiceTest
 {

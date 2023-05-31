@@ -11,6 +11,7 @@ using NetBom.Tests.Properties;
 /// Defines the <see cref="XmlHelperTest" />.
 /// </summary>
 [TestClass]
+[TestCategory("CI")]
 [TestCategory("Unit")]
 public class XmlHelperTest
 {
