@@ -20,6 +20,12 @@ public class ReportOption
     public string Source { get; set; }
 
     /// <summary>
+    /// Gets or sets the Output.
+    /// </summary>
+    [Option('o', "output", HelpText = "Output path for report.", Default = "./.netbom")]
+    public string Output { get; set; }
+
+    /// <summary>
     /// The Report.
     /// </summary>
     /// <returns>The return value.<see cref="int"/> Zero if successful.</returns>
@@ -30,10 +36,11 @@ public class ReportOption
         try
         {
             var source = Path.GetFullPath(Source);
+            var output = Path.GetFullPath(Output);
             logger.LogInformation("Processing file {file}...", source);
-            Program.ServiceProvider.GetService<ReportService>().Create(source);
+            Program.ServiceProvider.GetService<ReportService>().Create(source, output);
 
-            logger.LogInformation("Succesful :D", Source);
+            logger.LogInformation("Report succesfull on {path}", output);
             return 0;
         }
         catch (Exception ex)

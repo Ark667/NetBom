@@ -52,19 +52,18 @@ public class ReportService
     /// The report contains three folders, where are the files used to create the json,
     /// containing the information of the dependencies used in the csproj.
     /// </remarks>
-    public void Create(string source)
+    public void Create(string source, string output)
     {
         // Load paths
-        string reportsPath = Path.GetFullPath(".netbom");
-        CreateDirectory(reportsPath);
-        string csprojDirectory = Path.Combine(reportsPath, ".csproj");
+        CreateDirectory(output);
+        string csprojDirectory = Path.Combine(output, ".csproj");
         CreateDirectory(csprojDirectory);
-        string nuspecDirectory = Path.Combine(reportsPath, ".nuspec");
+        string nuspecDirectory = Path.Combine(output, ".nuspec");
         CreateDirectory(nuspecDirectory);
-        string licenseDirectory = Path.Combine(reportsPath, ".licence");
+        string licenseDirectory = Path.Combine(output, ".licence");
         CreateDirectory(licenseDirectory);
 
-        Logger.LogInformation("Output path on {path}.", reportsPath);
+        Logger.LogInformation("Output path on {path}.", output);
 
         // Initialize report
         var sourceFileInfo = new FileInfo(source);
@@ -118,7 +117,7 @@ public class ReportService
 
         // Write report to output
         string sourceJson = Path.Combine(
-            reportsPath,
+            output,
             $"{Path.GetFileNameWithoutExtension(sourceFileInfo.Name)}.json"
         );
         File.WriteAllText(
