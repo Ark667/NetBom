@@ -87,10 +87,10 @@ public class ProvisionService
     {
         string outputPath = Path.Combine(
             LicenseDirectory,
-            $"{nuGetPackage.Metadata.Title}.{nuGetPackage.Metadata.License.Text}".ToLower()
+            $"{nuGetPackage.Metadata.Id}.{nuGetPackage.Metadata.License?.Text}".ToLower()
         );
 
-        if (nuGetPackage.Metadata.License.Type == "file")
+        if (nuGetPackage.Metadata.License?.Type == "file")
         {
             string sourcePath = Path.Combine(
                 nugetPackagesPath,
@@ -104,7 +104,7 @@ public class ProvisionService
         }
         else
         {
-            if (nuGetPackage.Metadata.License.Text == "custom")
+            if (nuGetPackage.Metadata.License?.Text == "custom")
             {
                 using var httpClient = new HttpClient();
                 File.WriteAllBytes(

@@ -233,7 +233,7 @@ public class ReportService
                             {
                                 Url = nuspecInfo.Metadata.LicenseUrl,
                                 Type =
-                                    nuspecInfo.Metadata.License.Type == "expression"
+                                    nuspecInfo.Metadata.License?.Type == "expression"
                                         ? nuspecInfo.Metadata.License.Text
                                         : "custom",
                             },
@@ -253,26 +253,27 @@ public class ReportService
         var nuGetPackage = XmlHelper.DeserializeXml<Models.Nuspec.Package>(nuspecPath);
         var project = XmlHelper.DeserializeXml<Project>(source);
 
-        foreach (Group group in nuGetPackage.Metadata.Dependencies.Group)
-        {
-            if (group.TargetFramework == project.PropertyGroup.TargetFramework)
-                foreach (Dependency dependency in group.Dependency)
-                {
-                    var packages = CreateDependencies(
-                        NuGetService.GetNuspecPath(dependency.Id, dependency.Version),
-                        source
-                    );
+        if (nuGetPackage.Metadata.Dependencies != null)
+            foreach (Group group in nuGetPackage.Metadata.Dependencies.Group)
+            {
+                if (group.TargetFramework == project.PropertyGroup.TargetFramework)
+                    foreach (Dependency dependency in group.Dependency)
+                    {
+                        var packages = CreateDependencies(
+                            NuGetService.GetNuspecPath(dependency.Id, dependency.Version),
+                            source
+                        );
 
-                    dependencies.Add(
-                        new Models.Json.Package()
-                        {
-                            Name = dependency.Id,
-                            Version = dependency.Version,
-                            Dependencies = packages.Count > 0 ? packages : null
-                        }
-                    );
-                }
-        }
+                        dependencies.Add(
+                            new Models.Json.Package()
+                            {
+                                Name = dependency.Id,
+                                Version = dependency.Version,
+                                Dependencies = packages.Count > 0 ? packages : null
+                            }
+                        );
+                    }
+            }
 
         return dependencies;
     }
