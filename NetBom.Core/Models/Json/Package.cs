@@ -14,7 +14,7 @@ public class Package
 
     [JsonPropertyName("license")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string License { get; set; }
+    public License License { get; set; }
 
     [JsonPropertyName("authors")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

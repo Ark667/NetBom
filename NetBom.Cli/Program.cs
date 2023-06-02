@@ -32,6 +32,7 @@ internal static class Program
                 .AddTransient<INuGetService, NuGetService>()
                 .AddTransient<ReportService>()
                 .AddTransient<CsprojService>()
+                .AddTransient<ProvisionService>()
                 .AddScoped<IConfiguration>(_ => configuration);
 
             // Logging

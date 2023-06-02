@@ -95,34 +95,4 @@ public class NuGetService : INuGetService
         var nuspecPath = GetNuspecPath(name, version);
         return GetPackageInfo(nuspecPath);
     }
-
-    private void CopyLicense(
-        string contentInclude,
-        string contentVersion,
-        string licenseDirectory,
-        Package nuGetPackage
-    )
-    {
-        string sourceNuspec = GetPackagesPath();
-        if (nuGetPackage.Metadata.License.Type == "file")
-        {
-            string sourceFileName = Path.Combine(
-                sourceNuspec,
-                contentInclude.ToLower(),
-                contentVersion,
-                nuGetPackage.Metadata.License.Text
-            );
-
-            // Copy license to output TODO esto no deberia hacerse aqui
-            if (!string.IsNullOrEmpty(licenseDirectory))
-            {
-                string destFileName = Path.Combine(
-                    licenseDirectory,
-                    $"{contentInclude}.{nuGetPackage.Metadata.License.Text}".ToLower()
-                );
-
-                File.Copy(sourceFileName, destFileName, true);
-            }
-        }
-    }
 }

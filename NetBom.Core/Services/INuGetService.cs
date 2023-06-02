@@ -4,6 +4,8 @@ namespace NetBom.Core.Services;
 
 public interface INuGetService
 {
+    string GetPackagesPath();
+
     /// <summary>
     /// The GetNuspecPath.
     /// </summary>
