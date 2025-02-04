@@ -19,22 +19,22 @@ public class ReportService
     /// <summary>
     /// Gets the NuGetService.
     /// </summary>
-    public INuGetService NuGetService { get; }
+    public INuGetService NuGetService { get; private set; }
 
     /// <summary>
     /// Gets the CsprojService.
     /// </summary>
-    public CsprojService CsprojService { get; }
+    public CsprojService CsprojService { get; private set; }
 
     /// <summary>
     /// Gets the ProvisionService.
     /// </summary>
-    public ProvisionService ProvisionService { get; }
+    public ProvisionService ProvisionService { get; private set; }
 
     /// <summary>
     /// Gets the Logger.
     /// </summary>
-    public ILogger<ReportService> Logger { get; }
+    public ILogger<ReportService> Logger { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ReportService"/> class.

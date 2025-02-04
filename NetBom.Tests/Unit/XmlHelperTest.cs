@@ -1,23 +1,14 @@
-﻿/* MyDance Zone S.L. © 2023 */
-
-namespace NetBom.Tests.Unit;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetBom.Core.Helpers;
+﻿using NetBom.Core.Helpers;
 using NetBom.Core.Models.Csproj;
 using NetBom.Tests.Properties;
 
-/// <summary>
-/// Defines the <see cref="XmlHelperTest" />.
-/// </summary>
+namespace NetBom.Tests.Unit;
+
 [TestClass]
 [TestCategory("CI")]
 [TestCategory("Unit")]
 public class XmlHelperTest
 {
-    /// <summary>
-    /// The DeserializeXml.
-    /// </summary>
     [TestMethod]
     public void DeserializeXml()
     {

@@ -6,10 +6,6 @@ namespace NetBom.Core.Helpers;
 
 public static class XmlHelper
 {
-    /// <summary>
-    /// The DeserializeXml.
-    /// </summary>
-    /// <param name="filePath"></param>
     public static T DeserializeXml<T>(string filePath)
     {
         using TextReader reader = new StringReader(File.ReadAllText(filePath));

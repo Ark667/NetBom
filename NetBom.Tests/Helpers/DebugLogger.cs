@@ -1,8 +1,6 @@
-﻿/* MyDance Zone S.L. © 2023 */
+﻿using Microsoft.Extensions.Logging;
 
 namespace NetBom.Tests.Helpers;
-
-using Microsoft.Extensions.Logging;
 
 public class DebugLogger<T> : ILogger<T>
 {

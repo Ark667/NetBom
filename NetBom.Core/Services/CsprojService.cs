@@ -12,7 +12,7 @@ public class CsprojService
     /// <summary>
     /// Gets the Logger.
     /// </summary>
-    public ILogger<CsprojService> Logger { get; }
+    public ILogger<CsprojService> Logger { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CsprojService"/> class.

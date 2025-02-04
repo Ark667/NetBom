@@ -19,7 +19,7 @@ public class NuGetService : INuGetService
     /// <summary>
     /// Gets the Logger.
     /// </summary>
-    public ILogger<NuGetService> Logger { get; }
+    public ILogger<NuGetService> Logger { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NuGetService"/> class.
@@ -54,11 +54,7 @@ public class NuGetService : INuGetService
         return _nugetPackagesPath;
     }
 
-    /// <summary>
-    /// The GetNuspecPath.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="version"></param>
+    /// <inheritdoc/>
     public string GetNuspecPath(string name, string version)
     {
         string sourceNuspec = GetPackagesPath();

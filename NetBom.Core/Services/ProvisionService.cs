@@ -29,7 +29,7 @@ public class ProvisionService
     /// <summary>
     /// Gets the Logger.
     /// </summary>
-    public ILogger<ProvisionService> Logger { get; }
+    public ILogger<ProvisionService> Logger { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ProvisionService"/> class.

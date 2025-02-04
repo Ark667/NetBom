@@ -1,6 +1,4 @@
-﻿/* MyDance Zone S.L. © 2023 */
-
-namespace NetBom.Tests.Helpers;
+﻿namespace NetBom.Tests.Helpers;
 
 internal class NullScope : IDisposable
 {

@@ -1,22 +1,13 @@
-﻿/* MyDance Zone S.L. © 2023 */
+﻿using NetBom.Core.Services;
+using NetBom.Tests.Helpers;
 
 namespace NetBom.Tests.Unit;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetBom.Core.Services;
-using NetBom.Tests.Helpers;
-
-/// <summary>
-/// Defines the <see cref="NuGetServiceTest" />.
-/// </summary>
 [TestClass]
 [TestCategory("CI")]
 [TestCategory("Unit")]
 public class NuGetServiceTest
 {
-    /// <summary>
-    /// The GetNugetPath.
-    /// </summary>
     [TestMethod]
     public void GetNugetPath()
     {
